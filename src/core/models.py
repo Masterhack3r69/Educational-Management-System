@@ -55,12 +55,71 @@ class Student(models.Model):
         ('F', 'Female'),
     ]
 
+    CIVIL_STATUS_CHOICES = [
+        ('Single', 'Single'),
+        ('Married', 'Married'),
+        ('Widowed', 'Widowed'),
+    ]
+
+    NATIONALITY_CHOICES = [
+        ('Filipino', 'Filipino'),
+        ('American', 'American'),
+        ('British', 'British'),
+        ('Canadian', 'Canadian'),
+        ('Chinese', 'Chinese'),
+        ('Indian', 'Indian'),
+        ('Japanese', 'Japanese'),
+        ('Korean', 'Korean'),
+        ('Australian', 'Australian'),
+        ('Singaporean', 'Singaporean'),
+        ('Other', 'Other'),
+    ]
+
+    RELIGION_CHOICES = [
+        ('Roman Catholic', 'Roman Catholic'),
+        ('Islam', 'Islam'),
+        ('Evangelical', 'Evangelical'),
+        ('Iglesia ni Cristo', 'Iglesia ni Cristo'),
+        ('Protestant', 'Protestant'),
+        ('Buddhist', 'Buddhist'),
+        ('Hindu', 'Hindu'),
+        ('Seventh Day Adventist', 'Seventh Day Adventist'),
+        ('Aglipay', 'Aglipay'),
+        ('Other', 'Other'),
+        ('None', 'None'),
+    ]
+
     student_id = models.CharField(max_length=50, unique=True)
     first_name = models.CharField(max_length=100)
+    middle_name = models.CharField(max_length=100, blank=True, null=True)
     last_name = models.CharField(max_length=100)
     birthdate = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    address = models.TextField(blank=True)
+    civil_status = models.CharField(max_length=20, choices=CIVIL_STATUS_CHOICES, default='Single')
+    birth_place = models.CharField(max_length=100, blank=True, null=True)
+    nationality = models.CharField(max_length=50, choices=NATIONALITY_CHOICES, blank=True, null=True)
+    religion = models.CharField(max_length=50, choices=RELIGION_CHOICES, blank=True, null=True)
+    
+    email = models.EmailField(blank=True, null=True)
+    contact_number = models.CharField(max_length=15, blank=True, null=True)
+    
+    permanent_address = models.CharField(max_length=255, blank=True, null=True)
+    current_address = models.CharField(max_length=255, blank=True, null=True)
+    
+    emergency_contact_name = models.CharField(max_length=100, blank=True, null=True)
+    emergency_contact_number = models.CharField(max_length=15, blank=True, null=True)
+    
+    # Educational Background
+    elem_school_name = models.CharField(max_length=150, blank=True, null=True, verbose_name="Elementary School")
+    elem_year_graduated = models.PositiveIntegerField(blank=True, null=True, verbose_name="Year Graduated")
+    
+    secondary_school_name = models.CharField(max_length=150, blank=True, null=True, verbose_name="Secondary School")
+    secondary_year_graduated = models.PositiveIntegerField(blank=True, null=True, verbose_name="Year Graduated")
+    
+    college_school_name = models.CharField(max_length=150, blank=True, null=True, verbose_name="College/University")
+    college_year_graduated = models.PositiveIntegerField(blank=True, null=True, verbose_name="Year Graduated")
+    college_course = models.CharField(max_length=100, blank=True, null=True, verbose_name="Course/Degree")
+    
     date_joined = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
