@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+from django.urls import reverse_lazy
+from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
@@ -8,12 +10,17 @@ DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    'unfold',
+    'unfold.contrib.filters',
+    'unfold.contrib.forms',
+    'unfold.contrib.import_export',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
     'src.core',
 ]
 
@@ -67,3 +74,114 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+UNFOLD = {
+    "SITE_TITLE": "EMS Administration",
+    "SITE_HEADER": "EMS Dashboard",
+    "SITE_URL": "/",
+    "COLORS": {
+        "primary": {
+            "50": "250 245 255",
+            "100": "243 232 255",
+            "200": "233 213 255",
+            "300": "216 180 254",
+            "400": "192 132 252",
+            "500": "168 85 247",
+            "600": "147 51 234",
+            "700": "126 34 206",
+            "800": "107 33 168",
+            "900": "88 28 135",
+        },
+    },
+    "SIDEBAR": {
+        "show_search": True,
+        "show_all_applications": False,
+        "navigation": [
+            {
+                "title": "Navigation",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Dashboard",
+                        "icon": "dashboard",
+                        "link": reverse_lazy("admin:index"),
+                    },
+                ],
+            },
+            {
+                "title": "Student Management",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Students",
+                        "icon": "person",
+                        "link": reverse_lazy("admin:core_student_changelist"),
+                    },
+                    {
+                        "title": "Enrollments",
+                        "icon": "how_to_reg",
+                        "link": reverse_lazy("admin:core_enrollment_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": "Academics",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Courses",
+                        "icon": "school",
+                        "link": reverse_lazy("admin:core_course_changelist"),
+                    },
+                     {
+                        "title": "Subjects",
+                        "icon": "menu_book",
+                        "link": reverse_lazy("admin:core_subject_changelist"),
+                    },
+                     {
+                        "title": "Departments",
+                        "icon": "domain",
+                        "link": reverse_lazy("admin:core_department_changelist"),
+                    },
+                ],
+            },
+               {
+                "title": "Configuration",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Academic Years",
+                        "icon": "calendar_today",
+                        "link": reverse_lazy("admin:core_academicyear_changelist"),
+                    },
+                     {
+                        "title": "Semesters",
+                        "icon": "date_range",
+                        "link": reverse_lazy("admin:core_semester_changelist"),
+                    },
+                     {
+                        "title": "School Levels",
+                        "icon": "stairs",
+                        "link": reverse_lazy("admin:core_schoollevel_changelist"),
+                    },
+                ],
+            },
+             {
+                "title": "Users & Groups",
+                "separator": True,
+                "items": [
+                    {
+                        "title": "Users",
+                        "icon": "people",
+                        "link": reverse_lazy("admin:auth_user_changelist"),
+                    },
+                    {
+                        "title": "Groups",
+                        "icon": "groups",
+                        "link": reverse_lazy("admin:auth_group_changelist"),
+                    },
+                ],
+            },
+        ],
+    },
+}
